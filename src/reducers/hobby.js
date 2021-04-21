@@ -17,7 +17,12 @@ const hobbyReducer = (state = initialState, action) =>{
         }
 
         case 'SET_ACTIVE_HOBBY': {
-            return state;
+            const newActiveId = action.payload.id;
+            return {
+                // nếu là array hoặc object thì phải clone ra trước rồi mới update sửa
+                ...state,
+                activeId: newActiveId,
+            };
         }
     
         default:

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import casual from 'casual';
-import { addNewHobby } from '../actions/hobby';
+import { addNewHobby, setActiveHobby } from '../actions/hobby';
 import HobbyList from '../components/Home/HobbyList';
 
 
@@ -10,7 +10,19 @@ const randomNumber = () =>{
 }
 
 function HomePage() {
+  // **strict comparison : mỗi lần redux store thay đổi thì useSelector sẽ được chạy lại , sẽ tính toán một cái state mới
+  // nó sẽ so sánh cái state.hobby.list mới và của theo kiểu === và 
+  //nếu như nó giống nhau thì nó sẽ không trigger cái rereder và ngược lại
+  
+  // ** shallow comparison
+  // so sánh từng cái key trong object còn strict thì so sánh cả object
+
+
+
+  // khuyến khích tách ra thành các state độc lập , 
+  //còn nếu gộp lại thành một object thì chỉ cần một cái state thay đổi sẽ khiến redux store thay đổi => rerender
   const hobbyList = useSelector(state => state.hobby.list);
+  const activeId = useSelector(state => state.hobby.activeId);
   console.log('Hobby list ' , hobbyList);
   const dispatch = useDispatch();
   const newId = randomNumber();
@@ -30,6 +42,11 @@ function HomePage() {
         dispatch(action);
 
     }
+
+    const handleHobbyClick = (hobby) =>{
+      const action = setActiveHobby(hobby);
+      dispatch(action);
+    }
    
   // redux kết nối từ component nào cũng được
   return (
@@ -37,7 +54,10 @@ function HomePage() {
         <h1>Tedux hook</h1>
         <button onClick={handleAddHobbyClick}>Random hobby</button>
         
-        <HobbyList hobbyList={hobbyList}></HobbyList>
+        <HobbyList hobbyList={hobbyList}
+        activeId = {activeId}
+        onHobbyClick={handleHobbyClick}
+        ></HobbyList>
     </div>
   );
 }
