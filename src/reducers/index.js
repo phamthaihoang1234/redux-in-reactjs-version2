@@ -4,7 +4,7 @@ import hobbyReducer from "./hobby";
 import { combineReducers } from "redux";
 
 
-
+// dùng hàm combineReducer để tổng hợp các reducer
 const rootReducer = combineReducers({
     hobby: hobbyReducer,
     user: userReducer,

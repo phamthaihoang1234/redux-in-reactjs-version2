@@ -8,6 +8,7 @@ import store from './store';
 
 ReactDOM.render(
   // giúp kết nối vào trong redux từ mội nơi
+  // tầng index.js là tầng cao nhất
   <Provider store={store}>
       <React.StrictMode>
           <App/>
